@@ -1,5 +1,6 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
+const mongoose = require('mongoose')
+const validator = require('validator')
+const bcrypt = require('bcryptjs')
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -59,6 +60,27 @@ const userSchema = new mongoose.Schema({
     type: Array,
     default: []
   }
+})
+
+// to delete password prior to GET
+userSchema.methods.toJSON = function () {
+  const user = this
+  const userObject = user.toObject()
+
+  delete userObject.password
+
+  return userObject
+}
+
+// to hash the password
+userSchema.pre('save', async function () {
+  const user = this
+
+  if (user.isModified('password')) {
+    user.password = await bcrypt.hash(user.password, 8)
+  }
+
+  // next()
 })
 
 const User = mongoose.model('User', userSchema)

@@ -1,8 +1,8 @@
-const express = require('express');
-const User = require('../models/user');
+const express = require('express')
+const User = require('../models/user')
 
 // original router
-const router = new express.Router();
+const router = new express.Router()
 
 // endpoints
 
@@ -25,7 +25,7 @@ router.get('/users', async (req, res) => {
     const users = await User.find({})
     res.send(users)
   }
-  catch(e) {
+  catch (e) {
     res.status(500).send(e)
   }
 })
