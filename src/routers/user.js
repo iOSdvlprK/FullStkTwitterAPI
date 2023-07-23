@@ -30,4 +30,15 @@ router.get('/users', async (req, res) => {
   }
 })
 
+// login user routers
+router.post('/users/login', async (req, res) => {
+  try {
+    const user = await User.findByCredentials(req.body.email, req.body.password)
+    res.send(user)
+  }
+  catch (e) {
+    res.status(500).send(e)
+  }
+})
+
 module.exports = router
