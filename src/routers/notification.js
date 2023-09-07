@@ -4,7 +4,7 @@ const Notification = require('../models/notification')
 
 const router = new express.Router()
 
-router.post('/notification', auth, async (req, res) => {
+router.post('/notifications', auth, async (req, res) => {
   const notification = new Notification({
     ...req.body,
     user: req.user._id
@@ -19,7 +19,7 @@ router.post('/notification', auth, async (req, res) => {
   }
 })
 
-router.get('/notification', async (req, res) => {
+router.get('/notifications', async (req, res) => {
   try {
     const notifications = await Notification.find({})
     res.send(notifications)
@@ -29,7 +29,7 @@ router.get('/notification', async (req, res) => {
   }
 })
 
-router.get('/notification/:id', async (req, res) => {
+router.get('/notifications/:id', async (req, res) => {
   const _id = req.params.id
 
   try {
